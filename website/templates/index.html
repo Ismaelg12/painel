@@ -1,0 +1,528 @@
+{% extends "base_site.html" %}
+{% load static %}
+{% block content %}
+<div class="main-panel">
+	<div class="content-wrapper">
+		<div class="row">
+			<div class="col-md-12 grid-margin">
+				<div class="d-flex justify-content-between align-items-center">
+					<div>
+						<h3><strong>Painel</strong> CoronaVirus - {{cidade.cidade}}</h3>
+						<p><font color="gray">Atualizado em: 15/02/2021</font></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="row">
+	<div class="col-md-3 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<p class="text-danger card-title text-md-center text-xl-left">CASOS CONFIRMADOS</p>
+				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+					<p><font size="+3">{{confirmado}}</strong></font><br><font size="1" color="gray">Acumulado</font></p>
+					<p><font size="+3">{{conf_dia.conf_por_dia}}</strong></font><br><font size="1" color="gray">Casos novos</font></p>
+				</div>  
+				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+					<p><font size="+1">{{incidencia|floatformat:2}}</strong></font><br><font size="1" color="gray">Incidência*</font></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<p class="text-success card-title text-md-center text-xl-left">CASOS RECUPERADOS</p>
+				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+					<h2 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">{{recuperado}}</h2>
+					<i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
+				</div>  
+				<p class="mb-0 mt-2 text-md-center">{{tx_recuperados|floatformat:2}} %<span class="text-black ml-1"><small>(Taxa de Recuperados*)</small></span></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<p class="text-danger card-title text-md-center text-xl-left">ÓBITOS CONFIRMADOS</p>
+				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+					<p><font size="+3">{{obito}}</strong></font><br><font size="1" color="gray">Acumulado</font></p>
+					<p><font size="+3">{{obt_dia.media_obt}}</strong></font><br><font size="1" color="gray">Obitos novos</font></p>
+				</div>  
+				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+					<p><font size="+1">{{tx_letalidade|floatformat:2}} %</strong></font><br><font size="1" color="gray">Letalidade*</font></p>
+					<p><font size="+1">{{mortalidade|floatformat:2}}</strong></font><br><font size="1" color="gray">Mortalidade*</font></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<p class="card-title text-md-center text-xl-left">HOSPITALIZAÇÕES</p>
+				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+					<p class="text-md-center"><font size="+3">{{uti}}</strong></font><br><font size="2" color="gray">UTI</font></p>
+					<p class="text-md-center"><font size="+3">{{internado}}</strong></font><br><font size="2" color="gray">Leito Clínico</font></p>
+				</div> 
+				<p class="mb-0 mt-2 text-md-center">{{hospitalizacao}}<span class="text-black ml-1"><small>(Total Hospitalizados)</small></span></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+		<div class="card border-bottom-0">
+			<div class="card-body pb-0">
+				<p class="text-muted">Número de casos novos por dia, Média móvel (7 dias) residentes em {{cidade.cidade}}</p>
+			</div>
+			<canvas id="novos_dia"></canvas>	
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+		<div class="card border-bottom-0">
+			<div class="card-body pb-0">
+				<p class="text-muted">Número de óbitos novos por dia, Média móvel (7 dias) residentes em {{cidade.cidade}}</p>
+			</div>
+			<div id="obitos_dia"></div>	
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card border-bottom-0">
+			<div class="card-body pb-0">
+				<p class="text-muted">Media de casos confirmados por mês residentes em {{cidade.cidade}} <br>(Atualização realizada no ultimo dia do referido mês)</p>
+			</div>
+			<div id="conf_mes" class="chart--container"></div>
+		</div>
+	</div>
+	<div class="col-md-6 grid-margin stretch-card">
+		<div class="card border-bottom-0">
+			<div class="card-body pb-0">
+				<p class="text-muted font-weight-light">Média de Óbitos confirmados por mês residentes em {{cidade.cidade}} <br>(Atualização realizada no ultimo dia do referido mês)</p>
+			</div>
+			<div id="obitos_mes" class="chart--container"></div>
+		</div>
+	</div>
+</div>
+	
+	<div class="row">
+		<div class="col-md-4 grid-margin stretch-card">
+			<div class="card position-relative">
+				<div class="card-body">					
+					<div class="col-md-12">
+						<p class="text-danger card-title text-md-center text-xl-left">Casos Confirmados</p>
+						<div id="conf_sexo"></div>
+					</div>					
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 grid-margin stretch-card">
+			<div class="card position-relative">
+				<div class="card-body">					
+					<div class="col-md-12">					
+						<p class="text-success card-title text-md-center text-xl-left">Casos Recuperados</p>
+						<div id="rec_sexo"></div>
+					</div>					
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 grid-margin stretch-card">
+			<div class="card position-relative">
+				<div class="card-body">					
+					<div class="col-md-12">
+						<p class="text-dark card-title text-md-center text-xl-left">Óbitos Confirmados</p>
+						<div id="obt_sexo"></div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 grid-margin stretch-card">
+			<div class="card position-relative">
+				<div class="card-body">					
+					<div class="col-md-12">
+						<p class="text-danger card-title text-md-center text-xl-left">Confirmados por faixa etária</p>
+						<div id="caso_idade"></div>
+					</div>					
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 grid-margin stretch-card">
+			<div class="card position-relative">
+				<div class="card-body">					
+					<div class="col-md-12">					
+						<p class="text-success card-title text-md-center text-xl-left">Recuperados por faixa etária</p>
+						<div id="rec_idade"></div>
+					</div>					
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 grid-margin stretch-card">
+			<div class="card position-relative">
+				<div class="card-body">					
+					<div class="col-md-12">
+						<p class="text-dark card-title text-md-center text-xl-left">Óbitos por faixa etária</p>
+						<div id="obito_idade"></div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 grid-margin stretch-card">
+			<div class="card position-relative">
+				<div class="card-body">					
+					<div class="col-md-12">
+						<p class="text-danger card-title text-md-center text-xl-left">Óbitos por comorbidade</p>
+						<div id="obito_morbidade" style="width: 100%; height: 500px;"></div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="row">
+		<div class="col-md-12 grid-margin stretch-card">
+			<div class="card position-relative">
+				<div class="card-body">					
+					<div class="col-md-12">
+						<p class="text-danger card-title text-md-center text-xl-left">Evolução dos Casos por semana epidmiológica (Residentes de {{cidade.cidade}})</p>
+						<canvas id="time" style="width: 100%; height: 400px;"></canvas>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<script type="text/javascript">
+//grafico de casos confirmados por mes
+var conf_mes =  "{{conf_mes}}";
+var total_conf_mes =  "{{total_conf_mes}}";
+var media_conf_mes  =  "{{media_conf_mes}}";
+//grafico de óbitos confirmados por mes
+var obitos_mes =  "{{obitos_mes}}";
+var total_obitos_mes =  "{{total_obitos_mes}}";
+var media_obitos_mes  =  "{{media_obitos_mes}}";
+//grafico de casos confirmados por sexo
+var obito_sexo_m =  "{{casos_obito_sexo_m}}";
+var obito_sexo_f =  "{{casos_obito_sexo_f}}";
+var conf_sexo_m  =  "{{casos_conf_sexo_m}}";
+var conf_sexo_f  =  "{{casos_conf_sexo_f}}";
+var rec_sexo_m  =  "{{casos_rec_sexo_m}}";
+var rec_sexo_f  =  "{{casos_rec_sexo_f}}";
+//grafico de casos confirmados por faixa etaria
+var etaria_zero = "{{etaria_zero}}";
+var etaria_um = "{{etaria_um}}";
+var etaria_dois = "{{etaria_dois}}";
+var etaria_tres = "{{etaria_tres}}";
+var etaria_quatro = "{{etaria_quatro}}";
+var etaria_cinco = "{{etaria_cinco}}";
+var etaria_seis = "{{etaria_seis}}";
+var etaria_sete = "{{etaria_sete}}";
+var etaria_oito = "{{etaria_oito}}";
+
+//grafico de casos obitos por faixa etaria
+var etaria_obt_zero = "{{etaria_obt_zero|safe}}";
+var etaria_obt_um = "{{etaria_obt_um|safe}}";
+var etaria_obt_dois = "{{etaria_obt_dois|safe}}";
+var etaria_obt_tres = "{{etaria_obt_tres|safe}}";
+var etaria_obt_quatro = "{{etaria_obt_quatro|safe}}";
+var etaria_obt_cinco = "{{etaria_obt_cinco|safe}}";
+var etaria_obt_seis = "{{etaria_obt_seis|safe}}";
+var etaria_obt_sete = "{{etaria_obt_sete|safe}}";
+var etaria_obt_oito = "{{etaria_obt_oito|safe}}";
+//grafico de casos recuperados por faixa etaria
+var etaria_rec_zero = "{{etaria_rec_zero|safe}}";
+var etaria_rec_um = "{{etaria_rec_um|safe}}";
+var etaria_rec_dois = "{{etaria_rec_dois|safe}}";
+var etaria_rec_tres = "{{etaria_rec_tres|safe}}";
+var etaria_rec_quatro = "{{etaria_rec_quatro|safe}}";
+var etaria_rec_cinco = "{{etaria_rec_cinco|safe}}";
+var etaria_rec_seis = "{{etaria_rec_seis|safe}}";
+var etaria_rec_sete = "{{etaria_rec_sete|safe}}";
+var etaria_rec_oito = "{{etaria_rec_oito|safe}}";
+</script>
+<!-- Grafico de Faixa etária -->
+<script type="text/javascript">
+	google.charts.load("current", {packages:["corechart"]});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['Sexo', 'Total'],
+			['Feminino', {{casos_rec_sexo_f|safe}}],
+			['Masculino',{{casos_rec_sexo_m|safe}}]
+			]);
+
+		var options = {
+			title: '',
+			pieHole: 0.4,
+			colors: ['#d21243','#4682B4'],   
+			legend: {position: 'top'},    
+
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('rec_sexo'));
+		chart.draw(data, options);
+	}  
+</script>
+<script type="text/javascript">
+	google.charts.load("current", {packages:["corechart"]});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['Sexo', 'Total'],
+			['Feminino', {{casos_conf_sexo_f|safe}}],
+			['Masculino',{{casos_conf_sexo_m|safe}}]
+			]);
+
+		var options = {
+			title: '',
+			pieHole: 0.4,
+			colors: ['#d21243','#4682B4'],
+			legend: {position: 'top'},        
+
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('conf_sexo'));
+		chart.draw(data, options);
+	}
+</script>
+<script type="text/javascript">
+	google.charts.load("current", {packages:["corechart"]});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['Sexo', 'Total'],
+			['Feminino', {{casos_obito_sexo_f|safe}}],
+			['Masculino',{{casos_obito_sexo_m|safe}}]
+			]);
+
+		var options = {
+			title: '',
+			pieHole: 0.4,
+			colors: ['#d21243','#4682B4'], 
+			legend: {position: 'top'},       
+
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('obt_sexo'));
+		chart.draw(data, options);
+	}
+</script>
+
+<script type="text/javascript">
+	//CASOS NOVOS POR DIA E MEDIA MÓVEL
+var confData = {
+			labels: {{media_dia|safe}},
+			datasets: [{
+				type: 'line',
+				label: 'Média Móvel',
+				borderColor: window.chartColors.red,
+				borderWidth: 2,
+				fill: false,
+				data: {{tx_conf|safe}}
+			}, {
+				type: 'bar',
+				label: 'Casos Confirmados',
+				backgroundColor: window.chartColors.blue,
+				data: {{media_conf|safe}}
+			}]
+
+		};
+		window.onload = function() {
+			var ctx1 = document.getElementById('novos_dia').getContext('2d');
+			window.myMixedChart = new Chart(ctx1, {
+				type: 'bar',
+				data: confData,
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: ''
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: true
+					}
+				}
+			});
+		};
+</script>
+<script type="text/javascript">
+// NOVOS ÓBITOS
+var chartId = 'obitos_dia';
+
+// ÓBITOS POR DIA
+// -----------------------------
+var myConfig = {
+  type: 'mixed',
+  legend: {
+    verticalAlign: 'middle',
+    adjustLayout: true
+  },
+  plot: {
+    animation: {
+      effect: 'ANIMATION_SLIDE_TOP',
+      method: 'ANIMATION_BOUNCE_EASE_OUT',
+      sequence: 'ANIMATION_NO_SEQUENCE',
+      speed: 975,
+      delay: 500,
+    },
+  },
+  scaleX: {
+    labels: {{media_dia|safe}}, //one label for every datapoint
+  },
+  scaleY2: {
+    minValue: 0,
+    maxValue: 100,
+    step: 25, // can define scale step values or default
+  },
+  crosshairX: {
+    lineColor: '#FF0000',
+    lineStyle: 'dotted',
+    lineGapSize: '4px',
+    plotLabel: {
+      backgroundColor: "white",
+      borderColor: "#e3e3e3",
+      borderRadius: "5px",
+      bold: true,
+      fontSize: "12px",
+      fontFamily: "Lato",
+      fontColor: "#2f2f2f",
+      textAlign: 'right',
+      padding: '15px',
+      shadow: true,
+      shadowAlpha: 0.2,
+      shadowBlur: 5,
+      shadowDistance: 4,
+      shadowColor: "#a1a1a1",
+      textAlign: 'left'
+    },
+    scaleLabel: {
+      backgroundColor: '#424242'
+    }
+  },
+  series: [{
+    type: 'line',
+    values: {{tx_obt|safe}},
+    text: 'Media móvel',
+    lineColor: 'red',
+    marker: {
+      visible: 'false'
+    },
+    scales: 'scale-x, scale-y'
+  }, {
+    type: 'bar',
+    values: {{media_obt|safe}},
+    text: 'Óbitos Confirmados',
+    backgroundColor: '#4682B4',
+    scales: 'scale-x, scale-y-2'
+  }]
+};
+
+
+// RENDER CHART
+// -----------------------------
+zingchart.render({
+  id: chartId,
+  data : myConfig,
+  height: 560,
+  width: '100%'
+});
+</script>
+ <script type="text/javascript">
+ 	//GRAFICO DE CONFIRMADOS POR MES
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable({{mes_conf_list|safe}});
+
+        var options = {
+          vAxis: {title: 'Confirmados'},
+          hAxis: {title: 'Mes/Ano'},
+          seriesType: 'bars',
+          colors: ['#4682B4','#FF0000'],
+          series: {1: {type: 'line'}}
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('conf_mes'));
+        chart.draw(data, options);
+      }
+    </script>
+     <script type="text/javascript">
+     	// GRAFICO DE ÓBITOS POR MES
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable({{mes_obt_list|safe}});
+
+        var options = {
+          vAxis: {title: 'Óbitos'},
+          hAxis: {title: 'Mes/Ano'},
+          seriesType: 'bars',
+          colors: ['#4682B4','#FF0000'],
+          series: {1: {type: 'line'}}
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('obitos_mes'));
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+
+// Gráfico Comorbidade X Óbitos
+google.charts.load('current', {'packages':['bar']});
+
+google.charts.setOnLoadCallback(drawStuff);
+
+function drawStuff() {
+    var data = new google.visualization.arrayToDataTable({{cm_obt_lista|safe}});
+    var options = {
+        title: '',
+        legend: { position: 'none' },
+        colors: ['#000'],
+bars: 'vertical', // Required for Material Bar Charts.
+axes: {
+    x: {
+0: { side: 'top', label: ''} // Top x-axis.
+}
+},
+bar: { groupWidth: "90%" }
+};
+
+var chart = new google.charts.Bar(document.getElementById('obito_morbidade'));
+chart.draw(data, options);
+};
+
+</script>
+<script type="text/javascript">
+//SEMANA EPIDEMIOLÓGICA CONFIRMADOS
+    let chart = new Chart(time, {
+        type: 'line',
+        data: {
+            labels: {{semana_data|safe}},
+            datasets: [{
+                label: 'Confirmados',
+                data: {{semana_conf|safe}},
+                backgroundColor: "rgba(0, 0, 0, 0)",
+                borderColor: "orange"
+            },
+            {
+                label: 'Obitos',
+                data: {{semana_obt|safe}},
+                backgroundColor: "rgba(0, 3, 3, 0)",
+                borderColor: "red"
+            },
+            ]
+        }
+    });
+</script>
+{% endblock content %}
+<!-- content-wrapper ends -->

@@ -1,0 +1,94 @@
+{% extends "base_site.html" %}
+{% load static %}
+{% block content %}
+<div class="main-panel">
+	<div class="content-wrapper">
+		<div class="row">
+			<div class="col-md-12 grid-margin">
+				<div class="d-flex justify-content-between align-items-center">
+					<div>
+						<h3><strong>Sobre o Painel</strong> CoronaVirus - {{cidade.cidade}}</h3>
+						<p><font color="gray">Atualizado em: 15/02/2021</font></p>
+					</div>
+<!--
+<div>
+<button type="button" class="btn btn-primary btn-icon-text btn-rounded">
+<i class="ti-clipboard btn-icon-prepend"></i>Report
+</button>
+</div>
+-->
+</div>
+</div>
+</div>
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+		<div class="card position-relative">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-12 col-xl-12 d-flex flex-column justify-content-center">
+						<div class="ml-xl-4">
+							<h4 class="font-weight-bold mb-xl-4">Introdução</h4>
+							<p class="text-muted mb-2 mb-xl-0">Este painel foi desenvolvido para ser o veículo oficial de comunicação sobre a situação epidemiológica da COVID-19 em {{cidade.cidade}}.<br><br></p>
+						</div>
+						<div class="ml-xl-4">
+							<h4 class="font-weight-bold mb-xl-4">Atualizações</h4>
+							<p class="text-muted mb-2 mb-xl-0">As atualização dos dados sobre casos e óbitos confirmados por COVID-19 é realizado diariamente por meio das informações oficiais repassadas pela Secretaria Estadual de Saúde. 
+
+							.</p><br>
+						</div> 
+						<div class="ml-xl-4">
+							<h3 class="font-weight-bold mb-xl-4 text-success">Conceitos Básicos</h3>
+							<h4 class="font-weight-bold mb-xl-4">Casos novos</h4>
+							<p class="text-muted mb-2 mb-xl-0">Casos diários confirmados COVID 19 de pacientes com resultado confirmados laboratorialmente pra covid 19.</p><br>
+							<h4 class="font-weight-bold mb-xl-4">Casos acumulados</h4>
+							<p class="text-muted mb-2 mb-xl-0">Número total de casos confirmados COVID 19 de pacientes com resultado confirmado laboratorialmente pra covid 19.</p><br>
+							<h4 class="font-weight-bold mb-xl-4">Óbitos novos</h4>
+							<p class="text-muted mb-2 mb-xl-0">Casos diários de óbitos confirmados COVID 19 com base na informação da Secretaria Estadual de Saúde.</p><br>
+							<h4 class="font-weight-bold mb-xl-4">Óbitos acumulados</h4>
+							<p class="text-muted mb-2 mb-xl-0">Número total de óbitos confirmados COVID 19 com base na informação da Secretaria Estadual de Saúde.</p>
+						</div><br>
+						<div class="ml-xl-4">
+							<h3 class="font-weight-bold mb-xl-4 text-success">Coeficiente de Incidência de COVID-19</h3>
+							<h4 class="font-weight-bold mb-xl-4">Conceito</h4>
+							<p class="text-muted mb-2 mb-xl-0">Número de casos confirmados de COVID-19 por 10.000 habitantes, na população residente em determinado espaço geográfico, no período considerado.</p><br>
+							<h4 class="font-weight-bold mb-xl-4">Método de Cálculo</h4>
+							<p class="text-muted mb-2 mb-xl-0"><u>Número de casos confirmados de COVID-19 residentes</u> X 10.000<br>
+População* total residente no período determinado.</p><br>
+						</div>
+						<div class="ml-xl-4">
+							<h3 class="font-weight-bold mb-xl-4 text-success">Coeficiente de Mortalidade de COVID-19</h3>
+							<h4 class="font-weight-bold mb-xl-4">Conceito</h4>
+							<p class="text-muted mb-2 mb-xl-0">Número de óbitos confirmados de COVID-19 por 100.000 habitantes, na população residente em determinado espaço geográfico, no período considerado.</p><br>
+							<h4 class="font-weight-bold mb-xl-4">Método de Cálculo</h4>
+							<p class="text-muted mb-2 mb-xl-0"><u>Número de óbitos confirmados de COVID-19 residentes</u> X 100.000<br>
+População* total residente no período determinado.</p><br>
+						</div>
+						<div class="ml-xl-4">
+							<h3 class="font-weight-bold mb-xl-4 text-success">Coeficiente de Letalidade de COVID-19</h3>
+							<h4 class="font-weight-bold mb-xl-4">Conceito</h4>
+							<p class="text-muted mb-2 mb-xl-0">Número de óbitos confirmados de COVID-19 dividido pelo número de casos confirmados de COVID-19.</p><br>
+							<h4 class="font-weight-bold mb-xl-4">Método de Cálculo</h4>
+							<p class="text-muted mb-2 mb-xl-0"><u>Número de óbitos confirmados de COVID-19 residentes</u><br>
+Número de casos confirmados de COVID-19 residentes.</p><br>
+						</div>
+						<div class="ml-xl-4">
+							<h3 class="font-weight-bold mb-xl-4 text-success">Outras informações</h3>
+							<p class="text-muted mb-2 mb-xl-0">- A linha dos casos confirmados no gráfico histórico de casos baseia-se na data da notificação.
+<p class="text-muted mb-2 mb-xl-0">- A linha dos óbitos no gráfico do histórico de casos baseia-se na data do óbito.</p>
+<p class="text-muted mb-2 mb-xl-0">- A linha dos recuperados no gráfico do histórico de casos baseia-se na data da alta médica.</p>
+<p class="text-muted mb-2 mb-xl-0">- As colunas dos casos novos por dia baseiam-se na data da notificação.</p>
+<p class="text-muted mb-2 mb-xl-0">- A Variação de casos por por semana, baseia-se pelo calendário da Semana Epidemiológica.</p>
+<p class="text-muted mb-2 mb-xl-0">- A Taxa de transmissibilidade baseia-se na Variação de casos confirmados em um determinado intervalo de tempo dividido pela variação de tempo, dividido pelo total de casos.</p>
+<p class="text-muted mb-2 mb-xl-0">- A Média móvel de casos confirmados e de óbitos, usa como parâmetro, a soma dos casos confirmados/óbitos dos últimos 7 dias divido por 7.</p><br>
+<br>
+						</div> 
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock content %}
+<!-- content-wrapper ends -->
