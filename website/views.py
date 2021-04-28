@@ -1,6 +1,6 @@
 from django.db.models import Count,Q,Sum
 from django.shortcuts import render, redirect
-from core.models import Prefeitura, Diario, Caso, Media, Conf_mes, Obitos_mes, Comorbidade
+from core.models import Prefeitura, Diario, Caso, Media, Conf_mes, Obitos_mes, Comorbidade, Semana
 from datetime import date
 from django.utils.timezone import now
 
@@ -156,6 +156,19 @@ def site(request):
 		cm_obt_lista.append(linha)
 	cm_obt_lista.insert(0,['', 'Total'])
 
+	#####GRAFICO SEMANA EPIDEMIOLÓGICA
+	periodo	          = Semana.objects.filter(status=True).order_by('id')
+	last_semana       = Semana.objects.filter(status=True).order_by('id').last()
+	semana_conf_lista = []
+	semana_obt_lista = []
+	semana_trans_lista = []
+	semana_semana_lista = []
+
+	for s in periodo:
+		semana_conf_lista.append(s.conf_sm)
+		semana_obt_lista.append(s.obt_sm)		
+		semana_trans_lista.append(s.trans_sm)		
+		semana_semana_lista.append(s.semana)
 
 	context = {
 			'cidade':prefeitura,
@@ -213,6 +226,11 @@ def site(request):
 			'media_obt':media_obt_lista,
 			'tx_obt':tx_obt_lista,
 			'media_dia':media_lista,
+			##### SEMANA EPIDEMIOLÓGICA
+			'semana_conf':semana_conf_lista,
+			'semana_obt':semana_obt_lista,
+			'semana_trans':semana_trans_lista,
+			'semana_data':semana_semana_lista,
 			###### VARIÁVIS MES CONF/OBT
 			'mes_conf_list':mes_conf_list,
 			'mes_obt_list':mes_obt_list,
