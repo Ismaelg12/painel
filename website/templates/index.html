@@ -21,7 +21,7 @@
 				<p class="text-danger card-title text-md-center text-xl-left">CASOS CONFIRMADOS</p>
 				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
 					<p><font size="+3">{{confirmado}}</strong></font><br><font size="1" color="gray">Acumulado</font></p>
-					<p><font size="+3">{{conf_dia.conf_por_dia}}</strong></font><br><font size="1" color="gray">Casos novos</font></p>
+					<p><font size="+3">{{conf_por_dia}}</strong></font><br><font size="1" color="gray">Casos novos</font></p>
 				</div>  
 				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
 					<p><font size="+1">{{incidencia|floatformat:2}}</strong></font><br><font size="1" color="gray">Incidência*</font></p>
@@ -47,7 +47,7 @@
 				<p class="text-danger card-title text-md-center text-xl-left">ÓBITOS CONFIRMADOS</p>
 				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
 					<p><font size="+3">{{obito}}</strong></font><br><font size="1" color="gray">Acumulado</font></p>
-					<p><font size="+3">{{obt_dia.media_obt}}</strong></font><br><font size="1" color="gray">Obitos novos</font></p>
+					<p><font size="+3">{{obt_por_dia}}</strong></font><br><font size="1" color="gray">Obitos novos</font></p>
 				</div>  
 				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
 					<p><font size="+1">{{tx_letalidade|floatformat:2}} %</strong></font><br><font size="1" color="gray">Letalidade*</font></p>
@@ -60,6 +60,18 @@
 		<div class="card">
 			<div class="card-body">
 				<p class="card-title text-md-center text-xl-left">HOSPITALIZAÇÕES</p>
+				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+					<p class="text-md-center"><font size="+3">{{uti}}</strong></font><br><font size="2" color="gray">UTI</font></p>
+					<p class="text-md-center"><font size="+3">{{internado}}</strong></font><br><font size="2" color="gray">Leito Clínico</font></p>
+				</div> 
+				<p class="mb-0 mt-2 text-md-center">{{hospitalizacao}}<span class="text-black ml-1"><small>(Total Hospitalizados)</small></span></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<p class="card-title text-md-center text-xl-left">ISOLADOS</p>
 				<div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
 					<p class="text-md-center"><font size="+3">{{uti}}</strong></font><br><font size="2" color="gray">UTI</font></p>
 					<p class="text-md-center"><font size="+3">{{internado}}</strong></font><br><font size="2" color="gray">Leito Clínico</font></p>

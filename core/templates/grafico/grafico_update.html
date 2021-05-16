@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load static %}
+{% block container %}
+
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary"data-background-color="purple">
+            <h4 class="card-title ">Dados Cadastrados</h4>
+          </div>
+          <div class="card-content">
+                  <form method="POST" id="form_bairro">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-md-2" id="confirmado">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">*Confirmados</label>
+                          {{form.confirmado}}
+                          <span class="text-danger"> {{form.non_field_errors}}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-2" id="recuperado">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">* Recuperado</label>
+                          {{form.recuperado}}
+                          {{form.recuperado.errors}}
+                        </div>
+                      </div>
+                      <div class="col-md-2" id="obito">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Óbito</label>
+                          {{form.obito}}
+                          {{form.obito.errors}}
+                        </div>
+                      </div>
+                      <div class="col-md-2" id="criado_em">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Criado em</label>
+                          {{form.criado_em}}
+                          {{form.criado_em.errors}}
+                        </div>
+                      </div>
+                      <div class="col-md-2" id="conf_por_dia">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Confimados por dia</label>
+                          {{form.conf_por_dia}}
+                          {{form.conf_por_dia.errors}}
+                        </div>
+                      </div>
+                      <div class="col-md-2" id="conf_por_dia">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Óbitos por dia</label>
+                          {{form.obt_por_dia}}
+                          {{form.obt_por_dia.errors}}
+                        </div>
+                      </div>
+                      <div class="col-md-2" id="conf_por_dia">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Status</label>
+                          {{form.status}}
+                          {{form.status.errors}}
+                        </div>
+                      </div>
+                    </div>
+                    <br/><br/>
+                    <button type="submit" class="btn btn-primary pull-right" id="submitButton">Salvar</button>
+                    <a href="{% url 'medias' %}" class="btn btn-danger btn-group" onclick="return confirm('Deseja realmente cancelar?');">Cancelar</a>
+                    <div class="clearfix"></div>
+                  </form>
+                </div><!-- end content-->
+        </div><!--  end card  -->
+      </div> <!-- end col-md-12 -->
+    </div> <!-- end row -->
+  </div>
+</div>
+<script type="text/javascript">
+$('#id_criado_em').daterangepicker({
+  singleDatePicker: true,
+  showDropdowns: true,
+  "locale": {
+    "format": "DD/MM/YYYY",
+    "separator": " - ",
+    "applyLabel": "Aplicar",
+    "cancelLabel": "Cancelar",
+    "fromLabel": "De",
+    "toLabel": "Até",
+    "customRangeLabel": "Custom",
+    "daysOfWeek": [
+    "Dom",
+    "Seg",
+    "Ter",
+    "Qua",
+    "Qui",
+    "Sex",
+    "Sáb"
+    ],
+    "monthNames": [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+    ],
+    "firstDay": 0
+  }});
+  $(document).ready(function() {
+$('#submitButton').on('click',function(){
+  $('#form_bairro').validate({
+    rules: {
+      confirmado: { required: true, },
+      recuperado: { required: true,},
+      obito: { required: true,},
+      criado_em: { required: true,},
+      conf_por_dia: { required: true,},
+    },
+    messages: {
+      confirmado: { required: '<span class="text-danger">Prencha esse Campo</span>' },
+      recuperado: { required: '<span class="text-danger">Prencha esse Campo</span>' },
+      obito: { required: '<span class="text-danger">Prencha esse Campo</span>' },
+      criado_em: { required: '<span class="text-danger">Prencha esse Campo</span>' },
+      conf_por_dia: { required: '<span class="text-danger">Prencha esse Campo</span>' },
+    },
+  });
+});
+});
+</script>
+{% endblock container %}

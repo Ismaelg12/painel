@@ -86,6 +86,7 @@ class Caso(models.Model):
 	confirmado			= models.BooleanField('Confirmado', blank=True, default=True)
 	comorbidade    		= models.ForeignKey(Comorbidade,on_delete=models.PROTECT,null=True,blank=True)
 	recuperado			= models.BooleanField('Recuperado', blank=True)
+	isolado				= models.BooleanField('Isolado', blank=True)
 	obito				= models.BooleanField('Óbito', blank=True)
 	internado			= models.BooleanField('Internado', blank=True)
 	uti       			= models.BooleanField('UTI', blank=True)
@@ -109,6 +110,7 @@ class Caso(models.Model):
 class Diario(models.Model):
 	confirmado   	= models.IntegerField() #Fazer um count da tabela casos
 	conf_por_dia   	= models.IntegerField()	#Fazer uma agreggation da tabela casos com os casos novos do dia (criado_em)
+	obt_por_dia		= models.IntegerField()	#Fazer uma agreggation da tabela casos com os obitos novos do dia (criado_em)
 	obito   		= models.IntegerField()	#Fazer um count da tabela casos
 	recuperado   	= models.IntegerField()	#Fazer um count da tabela casos
 	criado_em       = models.DateField('Criado em',default= timezone.now())

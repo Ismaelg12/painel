@@ -13,8 +13,6 @@ def nota(request):
 
 def site(request):
 	prefeitura          = Prefeitura.objects.all()[0]
-	conf_dia			= Diario.objects.all().last()
-	obt_dia				= Media.objects.all().last()
 	confirmado_count    = Caso.objects.filter(confirmado=True,residente=True).count()
 	recuperado_count    = Caso.objects.filter(recuperado=True,residente=True).count()
 	obito_count         = Caso.objects.filter(obito=True,residente=True).count()
@@ -65,7 +63,17 @@ def site(request):
 	rec_sexo_m     =  Caso.objects.filter(recuperado=True,sexo='M',residente=True).count()
 	rec_sexo_f     =  Caso.objects.filter(recuperado=True,sexo='F',residente=True).count()
 
+	#Gráfico óbitos e confirmados por dia
+	res_dia        	= Diario.objects.filter(status=True).order_by('criado_em')
 
+	
+	obt_por_dia=[]
+	conf_por_dia=[]
+
+	for m in res_dia:
+		obt_por_dia=m.obt_por_dia
+		conf_por_dia=m.conf_por_dia
+	
 	# #Gráfico casos confirmados por mes
 	# casos_mes	        = Conf_mes.objects.filter(status_conf_mes=True).order_by('id')
 	
@@ -172,8 +180,6 @@ def site(request):
 
 	context = {
 			'cidade':prefeitura,
-			'conf_dia':conf_dia,
-			'obt_dia':obt_dia,
 			'confirmado':confirmado_count,
 			'recuperado':recuperado_count,
 			'obito':obito_count,
@@ -235,7 +241,10 @@ def site(request):
 			'mes_conf_list':mes_conf_list,
 			'mes_obt_list':mes_obt_list,
 			#### VARIAVEIS ÓBITOS POR MORBIDADE
-			'cm_obt_lista':cm_obt_lista
+			'cm_obt_lista':cm_obt_lista,
+			###VARIAVESI CASOS E OBITOS POR DIA
+			'conf_por_dia':conf_por_dia,
+			'obt_por_dia':obt_por_dia
 			}
 	return render(request, 'index.html', context)
 

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block container %}
+  <div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                 <div class="card-header card-header-primary"data-background-color="purple">
+                   <h4 class="card-title ">Detalhes</h4>
+              </div>
+                <div class="card-content">
+									<form method="POST">
+										{% csrf_token %}
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Nome</label>
+													<input type="text" value="{{comorbidade.tipo}}"class="form-control" disabled>
+												</div>
+											</div>
+										</div>										
+										<br/><br/>
+										<a href="{% url 'comorbidades' %}" class="btn btn-info btn-group">Voltar</a>
+										<div class="clearfix"></div>
+									</form>
+								</div><!-- end content-->
+                </div><!--  end card  -->
+            </div> <!-- end col-md-12 -->
+        </div> <!-- end row -->
+  </div>
+</div>
+{% endblock container %}

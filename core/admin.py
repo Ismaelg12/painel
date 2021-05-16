@@ -5,8 +5,8 @@ class PrefeituraAdmin(admin.ModelAdmin):
 	list_display = ['orgao','cidade','secretaria','coordenacao'] 
 
 class CasoAdmin(admin.ModelAdmin):
-	list_display = ['nome','bairro','confirmado','recuperado',
-	'comorbidade','obito','sexo','criado_em','atualizado_em'] 
+	list_display = ['nome','bairro','confirmado','recuperado','isolado',
+	'obito','comorbidade','sexo'] 
 	search_fields  = ['nome','bairro',]
 
 class BairroAdmin(admin.ModelAdmin):
@@ -18,7 +18,7 @@ class ComorbidadeAdmin(admin.ModelAdmin):
 	search_fields  = ['tipo']
 
 class DiarioAdmin(admin.ModelAdmin):
-	list_display = ['id','confirmado','recuperado', 'obito','criado_em', 'conf_por_dia'] 
+	list_display = ['id','confirmado','recuperado', 'obito','criado_em', 'conf_por_dia','obt_por_dia'] 
 	
 class UbsAdmin(admin.ModelAdmin):
 	list_display = ['id','nome']

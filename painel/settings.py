@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website',
     'core',
+    'controle_usuarios.apps.ControleUsuariosConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'painel.urls'
@@ -61,10 +63,12 @@ ROOT_URLCONF = 'painel.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['controle_usuarios/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'core.processors.verificar_basico_logado',#customizado
+                'core.processors.verificar_usuario_logado',#customizado
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -79,7 +83,7 @@ WSGI_APPLICATION = 'painel.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.mysql',
@@ -108,7 +112,7 @@ else:
         }
     }
 
-"""
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
