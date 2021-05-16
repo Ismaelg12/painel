@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'painel.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-"""
+
 DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.mysql',
@@ -112,7 +112,7 @@ else:
         }
     }
 
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
