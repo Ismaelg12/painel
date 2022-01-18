@@ -9,7 +9,7 @@
   <title>Painel Covid-19 {{cidade.cidade}}</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{% static "vendors/ti-icons/css/themify-icons.css"%}">
-  <link rel="stylesheet" href="{% static "vendors/base/vendor.bundle.base.css">
+
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -17,11 +17,8 @@
   <link rel="stylesheet" href="{% static "css/styles.css"%}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{% static "images/favicon.png"%}" />
-  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-core.min.js"></script>
-  <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-pie.min.js"></script>
-  <script src="{% static "js/Chart.js"%}"></script>
+
+
   <script src="{% static "js/utils.js"%}"></script>
 
    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
@@ -29,15 +26,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <!-- overlayScrollbars -->
-    <script src="{% static "js/jquery.min.js" %}"></script>
-    <!-- Theme style -->
-   
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
     <script type="application/javascript" src="awesomechart.js"></script>
+   
+
+    <!-- Theme style -->
+   
+    
+    
+    
 
     <style type="text/css">
     html, body, #rec_sexo {
@@ -71,7 +71,9 @@
   height: auto; 
   display:block;
 }
-  </style>
+  </style>  
+  {% block datepicker %}
+  {% endblock datepicker %}
 </head>
 <body>
   <div class="container-scroller">
@@ -137,6 +139,7 @@
         </ul>
       </nav>
       <!-- partial -->
+
     {% block content %}
 
     {% endblock content %}
@@ -153,41 +156,16 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller 
-  <script src="{% static "js/graph.donut.js"%}"></script>-->
-  <script src="{% static "vendors/base/vendor.bundle.base.js"%}"></script> 
-  <script src="{% static "vendors/chart.js/Chart.min.js"%}"></script>
-  <script src="{% static "js/off-canvas.js"%}"></script>
+  <!--  DataTables.net Plugin, full documentation here: https://datatables.net/    -->
+ 
   <script src="{% static "js/hoverable-collapse.js"%}"></script>
   <script src="{% static "js/template.js"%}"></script>
-  <script src="{% static "js/todolist.js"%}"></script>
-  <script src="{% static "js/dashboard.js"%}"></script>
-<!--GRAFICOS POR FAIXA ETÁRIA-->
-  <script src="{% static "js/caso.idade.js"%}"></script>
-  <script src="{% static "js/obito.idade.js"%}"></script>
-  <script src="{% static "js/rec.idade.js"%}"></script>
+  <script src="{% static "js/chart.min.js"%}"></script>
+  <script src="{% static "js/charts.js"%}"></script>
 
-   <script src="{% static "js/site.js"%}"></script>
-    <!-- Bootstrap 4 -->
-    <!-- ChartJS -->
-    <script src="{% static "js/jquery.datatables.js"%}"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="{% static "js/graph.donut.js"%}"></script>
-    <script src="{% static "plugins/flot/jquery.flot.js"%}"></script>
-    <script src="{% static "js/chart.min.js"%}"></script>
-    <script src="{% static "js/utils.js"%}"></script>
 
-       <!-- Bootstrap core JS-->
-    <script src="{% static "js/core.js"%}"></script>
-    <script src="{% static "js/charts.js"%}"></script>
-    <script src="{% static "themes/animated.js"%}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <!-- Third party plugin JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
 </body>
 
 </html>

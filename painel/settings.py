@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website',
     'core',
-    'controle_usuarios.apps.ControleUsuariosConfig',
 ]
 
 MIDDLEWARE = [
@@ -67,8 +66,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'core.processors.verificar_basico_logado',#customizado
-                'core.processors.verificar_usuario_logado',#customizado
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -80,9 +77,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'painel.wsgi.application'
 
+"""
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+"""
 
 DATABASES = {
     'default': {
@@ -91,28 +94,15 @@ DATABASES = {
         'USER':config('DB_USER'),
         'PASSWORD':config('DB_PASSWORD'),
         'HOST':config('DB_HOST'),
+        'PORT':'3306',
         'OPTIONS': {
         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     }
 }
-"""
-in_heroku = False
-if 'DATABASE_URL' in os.environ:
-    in_heroku = True
 
-import dj_database_url
-if in_heroku:
-    DATABASES = {'default': dj_database_url.config()}
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
 
-"""
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
