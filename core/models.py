@@ -117,6 +117,8 @@ class Diario(models.Model):
 	leito_positivo  = models.IntegerField()	#Fazer um count da tabela casos
 	uti_suspeito 	= models.IntegerField()	#Fazer um count da tabela casos
 	uti_positivo 	= models.IntegerField()	#Fazer um count da tabela casos
+	uti_srag 		= models.IntegerField()	#Fazer um count da tabela casos
+	leito_srag	 	= models.IntegerField()	#Fazer um count da tabela casos
 	criado_em       = models.DateField('Criado em',default= timezone.now())
 	status			= models.BooleanField('Status', blank=True, default=True)
 
